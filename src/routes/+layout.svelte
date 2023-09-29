@@ -6,20 +6,22 @@
   const user = data.user;
 </script>
 
+<div class="flex flex-col w-full h-full min-w-screen min-h-screen bg-neutral-900">
+
 <nav class="flex justify-between p-2 items-center"> 
-  <a href="/" class="px-4 py-2 border border-black rounded-md font-bold">Camp Web</a>
+  <a href="/" class="px-4 py-2 border border-yellow-400 bg-yellow-400 rounded-md font-bold">Camp Web</a>
   {#if user}
     <div class="flex items-center gap-2">
-      <a href="/dashboard" class="">
-        <img src={user.avatar} alt={`${user.username} profile picture`} class="w-12 h-12 border border-black rounded-full" />
-      </a>
+      <a href="/dashboard" class="px-4 py-2 border border-yellow-500 rounded-md">{user.username}</a>
       <form method="POST" action="/?/signOut">
-        <button class="px-4 py-2 border border-black rounded-md">Sign Out</button>
+        <button class="px-4 py-2 border border-yellow-500 rounded-md">Sign Out</button>
       </form>
     </div>
   {:else}
-    <a href="/auth/discord" class="px-4 py-2 border border-black rounded-md">Sign in with Discord</a>
+    <a href="/auth/discord" class="px-4 py-2 border border-yellow-500 rounded-md">Sign in with Discord</a>
   {/if}
 </nav>
 
 <slot />
+
+</div>
