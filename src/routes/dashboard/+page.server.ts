@@ -1,5 +1,5 @@
 import { db } from "$lib/server/prisma";
-import { error, fail } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 
 export const actions = {
   createCamper: async ({ locals, request }) => {
@@ -21,7 +21,8 @@ export const actions = {
         }
       },
       include: {
-        campers: true 
+        campers: true,
+        activities: true,
       }
     });
 
@@ -48,11 +49,10 @@ export const actions = {
         }
       },
       include: {
-        campers: true 
+        campers: true,
+        activities: true,
       }
     });
-
-    console.log("deleteCamper returns", { user });
 
     if (!user) {
       throw fail(500, { message: "Unable to delete camper" }); 
@@ -60,4 +60,66 @@ export const actions = {
 
     return { user }
   },
+  
+
+  createActivity: async ({ locals, request }) => {
+    const session = await locals.auth.validate();
+    if (!session) {
+      throw error(401, "Unauthorized");
+    }
+
+    const form_data = await request.formData();
+    const title = form_data.get("title");
+
+    const user = await db.user.update({
+      where: { id: session.user.userId },
+      data: {
+        activities: {
+          create: [
+            { title, description: "" }
+          ]
+        }
+      },
+      include: {
+        campers: true,
+        activities: true,
+      }
+    });
+
+    if (!user) {
+      throw fail(500, { message: "Unable to create activity" });
+    }
+
+    return { user };
+  },
+  deleteActivity: async ({ locals, request }) => {
+    const session = await locals.auth.validate();
+    if (!session) {
+      throw error(401, "Unauthorized");
+    }
+
+    const form_data = await request.formData();
+    const activity_id = form_data.get("activity_id");
+
+    const user = await db.user.update({
+      where: { id: session.user.userId },
+      data: {
+        activities: {
+          deleteMany: [{ id: activity_id }]
+        }
+      },
+      include: {
+        campers: true,
+        activities: true,
+      }
+    });
+
+    if (!user) {
+      throw fail(500, { message: "Unable to delete activity" }); 
+    }
+
+    return { user }
+  },
+
+
 }

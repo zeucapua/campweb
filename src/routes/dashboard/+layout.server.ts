@@ -10,7 +10,8 @@ export async function load({ locals }) {
   const user = await db.user.findUnique({
     where: { id: session.user.userId },
     include: {
-      campers: true
+      campers: true,
+      activities: true,
     }
   });
 

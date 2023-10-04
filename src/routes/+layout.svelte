@@ -12,13 +12,13 @@
   <a href="/" class="px-4 py-2 border border-yellow-400 bg-yellow-400 rounded-md font-bold">Camp Web</a>
   {#if user}
     <div class="flex items-center gap-2">
-      <a href="/dashboard" class="px-4 py-2 border border-yellow-500 rounded-md">{user.username}</a>
+      <a href="/dashboard" class="text-white px-4 py-2 border border-yellow-500 rounded-md">{user.username}</a>
       <form method="POST" action="/?/signOut">
-        <button class="px-4 py-2 border border-yellow-500 rounded-md">Sign Out</button>
+        <button class="text-white px-4 py-2 border border-yellow-500 rounded-md">Sign Out</button>
       </form>
     </div>
   {:else}
-    <a href="/auth/discord" class="px-4 py-2 border border-yellow-500 rounded-md">Sign in with Discord</a>
+    <a href="/auth/discord" class="text-white px-4 py-2 border border-yellow-500 rounded-md">Sign in with Discord</a>
   {/if}
 </nav>
 

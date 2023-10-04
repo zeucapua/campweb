@@ -25,7 +25,8 @@ model User {
   username String
   avatar   String
 
-  campers Camper[]
+  campers    Camper[]
+  activities Activity[]
 }
 
 model Camper {
@@ -45,13 +46,15 @@ enum ActivityType {
 model Activity {
   id          String       @id @unique @default(cuid())
   title       String
-  description String
+  description String // markdown
   created_at  DateTime     @default(now())
   type        ActivityType @default(TEMPLATE)
 
   camper     Camper? @relation(fields: [camperId], references: [id])
   submission String? // will be changed
   camperId   String?
+  user       User?   @relation(fields: [userId], references: [id])
+  userId     String?
 }
 
 // IMPORTANT: LUCIA AUTH MODELS
