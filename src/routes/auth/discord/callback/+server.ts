@@ -41,11 +41,14 @@ export const GET = async ({ url, cookies, locals }) => {
 		});
 	} catch (e) {
 		if (e instanceof OAuthRequestError) {
+      console.log(e);
 			// invalid code
 			return new Response(null, {
-				status: 400
+				status: 400,
 			});
 		}
+
+    console.log(e);
 		return new Response(null, {
 			status: 500
 		});
